@@ -14,7 +14,7 @@ Based on: Debian (Wheezy)
 
 Virtual size: 216.1 MB (102 MB)
 
-Apt packages: procps
+Apt packages: unzip, curl, libicu52, libunwind8
 
 ## Usage
 

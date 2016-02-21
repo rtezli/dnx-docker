@@ -4,13 +4,18 @@ MAINTAINER Robert Tezli <robert@pixills.com>
 
 ENV DNX_RUNTIME coreclr
 ENV DNX_VERSION 1.0.0-rc1-update1
+ENV PATH $PATH:/usr/lib/x86_64-linux-gnu
 
-RUN bash -c "echo \"deb http://ftp.de.debian.org/debian sid main\" | tee -a /etc/apt/sources.list &&\
- apt-get update &&\
- apt-get install -y -qq unzip curl libicu52 libunwind8 && \
- curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | bash &&\
- source ~/.dnx/dnvm/dnvm.sh &&\
- chmod +x ~/.dnx/dnvm/dnvm.sh &&\
- dnvm install $DNX_VERSION -OS linux -r coreclr -a x64 -p -g -alias default &&\
- apt-get purge -y -qq unzip &&\
- apt-get autoremove -y -qq"
+COPY *.sh /tmp/scripts/
+
+RUN echo "deb http://ftp.de.debian.org/debian jessie main" >> /etc/apt/sources.list &&\
+    apt-get update -qq &&\
+    apt-get install -y -qq unzip bsdtar curl libcurl3 libssl1.0.0 libicu52 libunwind8 autoconf automake build-essential libtool &&\
+    useradd -p '' -m -d /home/service service &&\
+    bash /tmp/scripts/setup-libuv.sh &&\
+    apt-get purge -y -qq bsdtar autoconf automake build-essential &&\
+    apt-get autoremove -y -qq &&\
+    rm -rf /usr/share/doc &&\
+    rm -rf /usr/share/man &&\
+    rm -rf /var/run &&\
+    chmod 777 /tmp/scripts

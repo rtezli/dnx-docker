@@ -19,3 +19,6 @@ Apt packages: unzip, curl, libicu52, libunwind8
 ## Usage
 
 To bo used as base image for .i.e. ASP.NET Core
+
+ln /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.2 /usr/lib/libcrypto.so.1.0.0 &&\
+ln /usr/lib/x86_64-linux-gnu/libssl.so.1.0.2 /usr/lib/libssl.so.1.0.0 &&\

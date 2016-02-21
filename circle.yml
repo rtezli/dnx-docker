@@ -1,0 +1,13 @@
+machine:
+    environment:
+        DNX_ARCH: x64
+        DNX_RUNTIME: coreclr
+        DNX_VERSION: 1.0.0-rc1-update1
+dependencies:
+    override:
+test:
+    override:
+        - DOCKER_CONTAINER_ID=$(docker build -t rtezli/dnx:$DNX_VERSION)
+        - docker tag $DOCKER_CONTAINER_ID latest
+        - docker push rtezli/dnx:$DNX_VERSION
+        - docker push rtezli/dnx:latest
